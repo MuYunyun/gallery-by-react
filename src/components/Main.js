@@ -80,11 +80,47 @@ class ImgFigure extends React.Component {
 					<h2 className="img-title">{this.props.data.title}</h2>
 					<div className="img-back" onClick={this.handleClick}>
 						<p>
-							{this.props.data.title}
+							{this.props.data.desc}
 						</p>
 					</div>
 				</figcaption>
 			</figure>
+		);
+	}
+}
+
+// 控制组件
+class ControllerUnit extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleClick = this.handleClick.bind(this);
+	}
+	handleClick(e) {
+
+		// 如果点击的是当前正在选中态的按钮，则翻转图片，否则将对应的图片居中
+		if (this.props.arrange.isCenter) {
+			this.props.inverse();
+		} else {
+			this.props.center();
+		}
+
+		e.preventDefault();
+		e.stopPropagation();
+	}
+	render() {
+		var controllerUnitClassName = 'controller-unit';
+
+		// 如果对应的是居中的图片，显示控制按钮的居中态
+		if (this.props.arrange.isCenter) {
+			controllerUnitClassName += ' is-center';
+			// 如果同时对应的是翻转图片，显示控制按钮的翻转态
+			if (this.props.arrange.isInverse) {
+				controllerUnitClassName += ' is-inverse';
+			}
+		}
+
+		return (
+			<span className={controllerUnitClassName} onClick={this.handleClick}></span>
 		);
 	}
 }
@@ -169,8 +205,8 @@ class GalleryByReactApp extends React.Component {
 			isCenter: true
 		}
 
-		// 取出要布局上侧的图片的状态信息 ??
-		topImgSpliceIndex = Math.floor(Math.random() * (imgsArrangeArr.length))
+		// 取出要布局上侧的图片的状态信息
+		topImgSpliceIndex = Math.floor(Math.random() * (imgsArrangeArr.length - topImgNum))
 		imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex, topImgNum);
 
 		// 布局位于上侧的图片
@@ -236,9 +272,9 @@ class GalleryByReactApp extends React.Component {
 	componentDidMount() {
 
 		// 首先拿到舞台的大小
-		let stageDom = ReactDOM.findDOMNode(this.refs.stage),
-			stageW = stageDom.scrollWidth,
-			stageH = stageDom.scrollHeight,
+		let stageDOM = ReactDOM.findDOMNode(this.refs.stage),
+			stageW = stageDOM.scrollWidth,
+			stageH = stageDOM.scrollHeight,
 			halfStageW = Math.ceil(stageW / 2),
 			halfStageH = Math.ceil(stageH / 2);
 
@@ -248,6 +284,7 @@ class GalleryByReactApp extends React.Component {
 			imgH = imgFigureDOM.scrollHeight,
 			halfImgW = Math.ceil(imgW / 2),
 			halfImgH = Math.ceil(imgH / 2);
+		debugger
 
 		// 计算中心图片的位置点
 		this.Constant.centerPos = {
@@ -272,7 +309,8 @@ class GalleryByReactApp extends React.Component {
 		this.Constant.vPosRange.x[0] = halfStageW - imgW;
 		this.Constant.vPosRange.x[1] = halfStageW;
 
-		this.rearrange(0);
+		var imgsArrangeArr = this.state.imgsArrangeArr;
+		this.rearrange(getRangeRandom(0, imgsArrangeArr.length));
 
 	}
 
@@ -295,6 +333,7 @@ class GalleryByReactApp extends React.Component {
 			}
 
 			imgFigures.push(<ImgFigure data={value} key={index} ref={'imgFigure' + index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
+			controllerUnits.push(<ControllerUnit key={index} arrange={this.state.imgsArrangeArr[index]} inverse={this.inverse(index)} center={this.center(index)}/>);
 		}.bind(this));
 
 		return (
