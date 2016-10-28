@@ -29,6 +29,57 @@ html, body {
   overflow: hidden;
 
   background-color: #ddd;
+
+  perspective: 1800px;        //井深概念
+
+  @at-root {
+    .img-figure {
+      position: absolute;
+      width: 320px;
+      height: 360px;
+      margin: 0;
+      padding: 40px;
+      cursor: pointer;
+
+      background-color: #fff;
+
+      box-sizing: border-box;   //包含边距
+      transform-origin: 0 50% 0;  // 默认为 50% 50% 0;
+      transform-style: preserve-3d;
+      transition: transform .6s ease-in-out, left .6s ease-in-out, top .6s ease-in-out;
+      &.is-inverse {
+        transform: translate(320px) rotateY(180deg);  //抖的效果
+      }
+    }
+
+    .img-back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+      box-sizing: border-box;
+      text-align: center;
+      color: #666;
+      transform: rotateY(180deg) translateZ(1px);
+      backface-visibility: hidden;
+      background: #fff; 
+    }
+
+    figcaption {
+      text-align: center;
+
+      .img-title {
+        margin: 20px 0 0 0;
+
+        color: #a7a0a2;
+        font-size: 16px;
+      }
+    }
+  }
+
+
 }
 /* image -- end */
 
@@ -44,19 +95,3 @@ html, body {
   text-align: center;
 }
 /* controller -- end */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
