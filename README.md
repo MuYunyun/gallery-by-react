@@ -1,17 +1,18 @@
 # gallery-by-react
 ## a photo gallery project based on react
 
-基于ReactJS构架的图片画廊应用-仿造慕课网课程编写
-
+基于ReactJS构架的图片画廊应用
 ```
-git clone https://github.com/wangyongzhi/gallery-by-react
+git clone https://github.com/MuYunyun/gallery-by-react.git
 npm i
 npm start
 ```
 
 完事会自动打开http://localhost:8000/webpack-dev-server/可看效果
 
-如果你想先睹为快，也可通过 http://zhige.me/gallery-by-react/ 查看效果
+如果你想先睹为快，可以<a href="http://muyunyun.cn/gallery-by-react/">点击我</a>查看效果
+
+也可以看我如何在<a href="https://github.com/MuYunyun/yunban">另外一个项目里</a>的网页端以及微信端整合它的
 
 当然，学一门新技术可能会遇到很多问题，尤其是最新版本和教程已经有很不同之处，这需要有足够的耐心，一步一步去解决它。
 
